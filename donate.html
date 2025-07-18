@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petzyyy - Donate a Pet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(255, 255, 255, 0.636); 
+            background-image: url("../Image/p1.png"); 
+            color: #222831; 
+        }
+
+        header {
+            background-color: #0c5dfe;
+            padding: 0.5rem; 
+        }
+        header .logo {
+            height: 40px;
+            margin-right: 5px;
+            cursor: pointer; /* Make the logo appear clickable */
+        }
+        header h1 {
+            font-size: 16px;
+            margin: 0;
+            color: rgb(17, 2, 2);
+            cursor: pointer; /* Make the h1 appear clickable */
+        }
+
+        .form-container {
+            border-radius: 15px; 
+            border: 2px solid rgba(0, 0, 0, 0.3); 
+        }
+    </style>
+</head>
+<body>
+    <header class="flex items-center justify-between">
+        <div class="flex items-center">
+            <a href="home.php" class="flex items-center">
+                <img src="Image/p2.png" alt="Petzyyy Logo" class="logo">
+                <b><h1>Petzzyy</h1></b>
+            </a>
+        </div>
+    </header>
+
+   
+
+    <div class="form-container bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-auto mt-10">
+        <h1 class="text-2xl font-bold text-center mb-4">Donate Pets To Us</h1>
+
+        <!-- Updated form action for processing the donation -->
+        <form action="process_donation.php" method="POST" enctype="multipart/form-data"> 
+            <div class="mb-3">
+                <label for="petName" class="block text-gray-700 text-sm font-bold mb-1">Pet Name</label>
+                <input type="text" name="pet_name" id="petName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required> 
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                    <label for="petAge" class="block text-gray-700 text-sm font-bold mb-1">Pet Age</label>
+                    <input type="number" name="pet_age" id="petAge" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="petGender" class="block text-gray-700 text-sm font-bold mb-1">Pet Gender</label>
+                    <select name="pet_gender" id="petGender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">--select--</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="block text-gray-700 text-sm font-bold mb-1">Description</label>
+                <textarea name="pet_description" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                    <label for="petCategory" class="block text-gray-700 text-sm font-bold mb-1">Pet Category</label>
+                    <select name="pet_category" id="petCategory" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">--select--</option>
+                        <option value="dog">Dog</option>
+                        <option value="cat">Cat</option>
+                        <option value="bird">Bird</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="petBreed" class="block text-gray-700 text-sm font-bold mb-1">Pet Breed</label>
+                    <input type="text" name="pet_breed" id="petBreed" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                    <label for="petHeight" class="block text-gray-700 text-sm font-bold mb-1">Pet Height (Hands)</label>
+                    <input type="number" name="pet_height" id="petHeight" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="petWeight" class="block text-gray-700 text-sm font-bold mb-1">Pet Weight (kg)</label>
+                    <input type="number" name="pet_weight" id="petWeight" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="petCharges" class="block text-gray-700 text-sm font-bold mb-1">Pet Charges (Free or Your Price)</label>
+                <input type="text" name="pet_charges" id="petCharges" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-3">
+                <label for="petImage" class="block text-gray-700 text-sm font-bold mb-1">Pet Image</label>
+                <input type="file" name="pet_image" id="petImage" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Donate
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .success-icon {
+            font-size: 50px;
+            color: green;
+        }
+        .btn {
+            background: #0c5dfe;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #0843bf;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1 class="text-2xl font-bold mt-4">Order Confirmed!</h1>
+        <p class="text-gray-700 mt-2">Thank you for your purchase. Your order has been placed successfully.</p>
+        <p class="text-lg font-bold mt-4">Order Summary</p>
+        <div id="orderDetails" class="text-gray-800 mt-2"></div>
+        <p id="orderTotal" class="font-bold text-xl mt-4"></p>
+        <a href="home.php" class="btn">Continue Shopping</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const orderDetailsContainer = document.getElementById("orderDetails");
+            const orderTotalElement = document.getElementById("orderTotal");
+    
+            // Retrieve order summary from localStorage
+            let orderSummary = JSON.parse(localStorage.getItem("orderSummary")) || [];
+            let total = 0;
+    
+            // Check if the order is empty
+            if (orderSummary.length === 0) {
+                orderDetailsContainer.innerHTML = "<p>No items in order.</p>";
+                return;
+            }
+    
+            // Display each product in the order summary
+            orderSummary.forEach(item => {
+                let itemTotal = item.price * item.quantity;
+                total += itemTotal;
+    
+                const orderItem = document.createElement("div");
+                orderItem.classList.add("product", "bg-white", "rounded-lg", "shadow-md", "p-4", "mb-4");
+    
+                orderItem.innerHTML = `
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 mr-4">
+                        <div>
+                            <h2 class="text-lg font-bold">${item.name}</h2>
+                            <p class="text-gray-800">Quantity: ${item.quantity}</p>
+                            <p class="text-gray-800 font-bold">₹${itemTotal.toFixed(2)}</p>
+                        </div>
+                    </div>
+                `;
+    
+                orderDetailsContainer.appendChild(orderItem);
+            });
+    
+            // Display total price
+            orderTotalElement.textContent = `Total: ₹${total.toFixed(2)}`;
+    
+            // Clear the order summary after displaying it
+            localStorage.removeItem("orderSummary");
+        });
+    </script>
+    
+</body>
+</html>

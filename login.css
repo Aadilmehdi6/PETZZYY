@@ -1,0 +1,94 @@
+body {
+  background-image: url('/Image/p1.png'); /* Ensure this path is correct */
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  width: 650px; /* Adjust width as needed */
+  height: 350px; /* Adjust height as needed */
+  padding: 20px;
+  border-radius: 20px; /* Adjust as needed for the desired roundness */
+  background-color: rgba(255, 255, 255, 0.8); /* White with 80% transparency */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+}
+
+input[type="text"],
+input[type="email"], /* Ensure this is added for email */
+input[type="password"] {
+  width: 100%;
+  padding: 12px; /* Same padding for both inputs */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Same border radius for consistency */
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.view-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  font-size: 18px; /* Adjust font size */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.logo-container img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}

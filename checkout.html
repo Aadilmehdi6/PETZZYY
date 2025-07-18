@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Checkout</h2>
+        
+        <!-- Cart Summary -->
+        <div id="cartSummary" class="mb-6"></div>
+        
+        <!-- User Details Form -->
+        <form id="checkoutForm" class="space-y-4">
+            <input type="text" id="name" placeholder="Full Name" class="w-full p-2 border rounded" required>
+            <input type="email" id="email" placeholder="Email" class="w-full p-2 border rounded" required>
+            <input type="text" id="address" placeholder="Delivery Address" class="w-full p-2 border rounded" required>
+            <input type="tel" id="phone" placeholder="Phone Number" class="w-full p-2 border rounded" required>
+            
+            <!-- Payment Options -->
+            <div class="space-y-2">
+                <label class="block"><input type="radio" name="payment" value="COD" checked> Cash on Delivery</label>
+                <label class="block"><input type="radio" name="payment" value="Online"> Online Payment</label>
+            </div>
+            
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full">Place Order</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cartSummary = document.getElementById("cartSummary");
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            
+            if (cart.length === 0) {
+                cartSummary.innerHTML = "<p class='text-red-500'>Your cart is empty!</p>";
+            } else {
+                let total = 0;
+                cartSummary.innerHTML = cart.map(item => {
+                    total += item.price * item.quantity;
+                    return `<div class='p-2 border-b'>
+                        <strong>${item.name}</strong> (x${item.quantity}) - ₹${item.price * item.quantity}
+                    </div>`;
+                }).join("") + `<p class='font-bold mt-2'>Total: ₹${total.toFixed(2)}</p>`;
+            }
+            
+            document.getElementById("checkoutForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+    
+                if (cart.length === 0) {
+                    alert("Your cart is empty! Please add items before placing an order.");
+                    return;
+                }
+    
+                // Save order details before clearing the cart
+                localStorage.setItem("orderSummary", JSON.stringify(cart));
+    
+                // Debugging logs
+                console.log("Order Summary Saved:", localStorage.getItem("orderSummary"));
+    
+                alert("Order Placed Successfully!");
+    
+                // Clear the cart after order is placed
+                localStorage.removeItem("cart");
+    
+                // Redirect to Order Confirmation page
+                window.location.href = "order-confirmation.html";
+            });
+        });
+    </script>
+    
+</body>
+</html>

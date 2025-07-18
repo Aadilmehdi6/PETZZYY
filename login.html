@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petzzyy Login</title>
+  <style>
+    body {
+      background-image: url('Image/p1.png'); /* Ensure this path is correct */
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 650px;
+      height: 350px;
+      padding: 20px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-container {
+      position: relative;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+      font-size: 18px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .login-link a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="Image/p2.png" alt="Petzzyy Logo">  
+      <span style="font-size: 19px; font-weight: bold;">Petzzyy</span>
+    </div>
+    <h2>Please Login To Continue</h2>
+
+    <!-- Form sends data to login.php -->
+    <form action="login.php" method="post">
+      <div class="input-container">
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="input-container">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="login-link">
+      <a href="index.html">Don't have an account? Sign up</a>
+    </div>
+  </div>
+
+  <!-- JavaScript to handle error alerts based on URL parameters -->
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+
+    // Show an alert if there's an error (incorrect password or user not found)
+    if (error === 'incorrect_password') {
+      alert('Incorrect password! Please try again.');
+    } else if (error === 'user_not_found') {
+      alert('No user found with that email! Please sign up.');
+    }
+  </script>
+</body>
+</html>

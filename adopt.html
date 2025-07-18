@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoption</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            color: #131842;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0px;
+        }
+
+        .hover\:bg-hover-custom:hover {
+            background-color: #ECCEAE;
+        }
+
+        .text-main {
+            color: #131842;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 5px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            margin: 0;
+        }
+
+        .header {
+            background-color: #0c5dfe;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            color: rgb(31, 3, 3);
+            margin: 0;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons a i {
+            margin-right: 5px;
+        }
+
+        .nav-icons a:hover {
+            color: #ffcc00;
+        }
+
+        .pet-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .pet-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .pet-card-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .pet-card h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .pet-card p {
+            margin: 0px 0;
+        }
+
+        .adopt-button {
+            background-color: #0c5dfe;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: center;
+            width: calc(100% - 30px);
+            max-width: 200px;
+            text-align: center;
+        }
+
+        .adopt-button:hover {
+            background-color: #003399;
+        }
+
+        
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #0044cc;
+            color: white;
+            transition: left 0.3s;
+            z-index: 3;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .side-menu-header {
+            background-color: #003399;
+            text-align: center;
+            margin: 0;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .side-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .side-menu ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #003399;
+            width: 100%;
+            text-align: center;
+        }
+
+        .side-menu ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .side-menu ul li a img {
+            height: 20px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .side-menu ul li a:hover img {
+            transform: scale(1.2);
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+       
+.search-container {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 300px;
+    z-index: 1000;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.search-container #searchResults {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.search-container #searchResults a {
+    display: block;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+    text-decoration: none;
+}
+
+.search-container #searchResults a:hover {
+    background: #f0f0f0;
+}
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="home.php" class="logo">
+                <img src="Image/p2.png" alt="Petzzyy Logo">
+                <h1 class="text-main">Petzzyy</h1>
+            </a>
+            <nav class="nav">
+                <div class="nav-icons">
+                    <a href="#" id="menuToggle">☰</a>
+                    <a href="#"><i class="fas fa-search"></i> Search</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
+                </div>
+            </nav>
+        </header>
+         <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h2>Hi, User</h2>
+        </div>
+        <ul>
+            <li><a href="adopt.html"><img src="icon1.png" alt=""> Instant Adoption!</a></li>
+            <li><a href="donate.html"><img src="icon2.png" alt=""> Donate Today!</a></li>
+            <li><a href="purchase.html"><img src="icon3.png" alt=""> Quick Purchase</a></li>
+            <li><a href="Image/p2.png"><img src="icon3.png" alt=""> Shop For Your Pets</a></li>
+        </ul>
+    </div>
+        <div class="container mx-auto mt-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Pet Card Example -->
+                <div class="pet-card" data-id="1">
+                    <img src="Image/p8.png" alt="Max, a Siberian Husky">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Max</h2>
+                        <p class="text-main mb-2">Animal: Dog</p>
+                        <p class="text-main mb-2">Age: 5 Years old</p>
+                        <p class="text-main mb-2">Gender: Male</p>
+                        <p class="text-main mb-2">Breed: Siberian Husky</p>
+                        <p class="text-main mb-2">Height: 5 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 33.4 KG</p>
+                        <p class="text-main mb-4">A graceful dog with erect ears and a dense soft coat.</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹FREE</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p42.png" alt="Lucy, a Labrador Retriever">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Luky</h2>
+                        <p class="text-main mb-2">Animal: Dog</p>
+                        <p class="text-main mb-2">Age: 3 Years old</p>
+                        <p class="text-main mb-2">Gender: female</p>
+                        <p class="text-main mb-2">Breed: Labrador Retriever</p>
+                        <p class="text-main mb-2">Height: 5 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 35.7 KG</p>
+                        <p class="text-main mb-4">The sweet-faced, lovable Labrador Retriever is one...</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹19999.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p11.png" alt="Molly, a German Shepherd">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Molly</h2>
+                        <p class="text-main mb-2">Animal: Dog</p>
+                        <p class="text-main mb-2">Age: 3 Years old</p>
+                        <p class="text-main mb-2">Gender: female</p>
+                        <p class="text-main mb-2">Breed: German Shepherd</p>
+                        <p class="text-main mb-2">Height: 4 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 27.2 KG</p>
+                        <p class="text-main mb-4">Generally considered dogkind's finest all-purpose...</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹12400.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p13.png" alt="Bruno, a Bulldog">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Lucy</h2>
+                        <p class="text-main mb-2">Animal: Dog</p>
+                        <p class="text-main mb-2">Age: 1 Years old</p>
+                        <p class="text-main mb-2">Gender: male</p>
+                        <p class="text-main mb-2">Breed: Pug</p>
+                        <p class="text-main mb-2">Height: 3 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 12.8 KG</p>
+                        <p class="text-main mb-4">Pugs are known for their charming and sociable...</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹4500.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p12.png" alt="Cooper, a Boxer">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Marley</h2>
+                        <p class="text-main mb-2">Animal: Dog</p>
+                        <p class="text-main mb-2">Age: 2 Years old</p>
+                        <p class="text-main mb-2">Gender: female</p>
+                        <p class="text-main mb-2">Breed: Golden Retriever</p>
+                        <p class="text-main mb-2">Height: 4.5 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 31 KG</p>
+                        <p class="text-main mb-4">Friendly, intelligent, and devoted companions...</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹10000.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p14.png" alt="Doberman, a Doberman Pinscher">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Fary</h2>
+                        <p class="text-main mb-2">Animal: Cat</p>
+                        <p class="text-main mb-2">Age: 2 Years old</p>
+                        <p class="text-main mb-2">Gender: female</p>
+                        <p class="text-main mb-2">Breed: Persian</p>
+                        <p class="text-main mb-2">Height: 2.2 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 12 KG</p>
+                        <p class="text-main mb-4">Persian cats are medium-sized, usually weigh between seven and 12 KG, and measure from 10-15 inches tall. </p>
+                        <p class="text-main font-bold mb-2 pet-price">₹12000.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p15.png" alt="Black Labrador, a Labrador Retriever">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Leo</h2>
+                        <p class="text-main mb-2">Animal: Cat</p>
+                        <p class="text-main mb-2">Age: 3 Years old</p>
+                        <p class="text-main mb-2">Gender: male</p>
+                        <p class="text-main mb-2">Breed: Maine Coon</p>
+                        <p class="text-main mb-2">Height: 2.4 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 15 KG</p>
+                        <p class="text-main mb-4">The Maine Coon is a solid, rugged cat that is well-proportioned and balanced despite their massive size.</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹14000.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p16.jpg" alt="Siamese">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Bella</h2>
+                        <p class="text-main mb-2">Animal: Cat</p>
+                        <p class="text-main mb-2">Age: 1 Years old</p>
+                        <p class="text-main mb-2">Gender: female</p>
+                        <p class="text-main mb-2">Breed: Siamese</p>
+                        <p class="text-main mb-2">Height: 1 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 8 KG</p>
+                        <p class="text-main mb-4">The Siamese is a little long-bodied cat with slim legs and a long slim tail.</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹40000.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p17.jpeg" alt="Marley, a Golden Retriever">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Snowball</h2>
+                        <p class="text-main mb-2">Animal: Cat</p>
+                        <p class="text-main mb-2">Age: 2 Years old</p>
+                        <p class="text-main mb-2">Gender: female</p>
+                        <p class="text-main mb-2">Breed: Ragdoll</p>
+                        <p class="text-main mb-2">Height: 2 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 10.2 KG</p>
+                        <p class="text-main mb-4">The Ragdoll is a breed of cat with a distinct colorpoint coat and blue eyes.</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹27000.00</p>
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                <div class="pet-card">
+                    <img src="Image/p18.jpg" alt="Marley, a Golden Retriever">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold text-main mb-2">Milo</h2>
+                        <p class="text-main mb-2">Animal: Cat</p>
+                        <p class="text-main mb-2">Age: 3 Years old</p>
+                        <p class="text-main mb-2">Gender: male</p>
+                        <p class="text-main mb-2">Breed: British Shorthair</p>
+                        <p class="text-main mb-2">Height: 3.5 (Hands)</p>
+                        <p class="text-main mb-2">Weight: 14 KG</p>
+                        <p class="text-main mb-4">The British Shorthair is a medium to large sized, compact, chunky cat, known for their attractive features and thick, plush fur.</p>
+                        <p class="text-main font-bold mb-2 pet-price">₹62000.00</p>  <!-- Added class "pet-price" -->
+                        <button class="adopt-button">Adopt Now</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+ <!-- Search Container -->
+ <div id="searchContainer" class="search-container">
+    <input type="text" id="searchInput" placeholder="Search...">
+    <div id="searchResults"></div>
+</div>
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sideMenu = document.getElementById('sideMenu');
+
+        menuToggle.addEventListener('click', function () {
+            sideMenu.classList.toggle('active');
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const adoptButtons = document.querySelectorAll('.adopt-button');
+        
+            adoptButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const petCard = this.closest('.pet-card');
+                    const petId = petCard.getAttribute('data-id');
+                    const petName = petCard.querySelector('h2').innerText.trim();
+                    const petImage = petCard.querySelector('img').src;
+        
+                    // Fetching price correctly
+                    let petPriceText = petCard.querySelector('.pet-price')?.innerText || '₹0';
+                    petPriceText = petPriceText.replace(/[^\d.]/g, ''); // Remove everything except numbers and decimal
+                    let petPrice = parseFloat(petPriceText);
+        
+                    // If price is not valid, set it to ₹0
+                    if (isNaN(petPrice)) {
+                        petPrice = 0;
+                    }
+        
+                    const petDetails = {
+                        id: petId,
+                        name: petName,
+                        price: petPrice,  
+                        image: petImage,
+                        quantity: 1
+                    };
+        
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    cart.push(petDetails);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+        
+                    alert(`${petName} has been added to your cart.`);
+                });
+            });
+        });
+        
+        
+    </script>
+</body>
+
+</html>

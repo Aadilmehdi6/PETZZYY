@@ -1,0 +1,414 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .header {
+            background-color: #0c5dfe;
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header .logo img {
+            height: 40px;
+            margin-right: 5px;
+        }
+
+        .header .logo h1 {
+            font-size: 16px;
+            margin: 0;
+            color: rgb(17, 2, 2);
+        }
+
+        .header .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav #menuToggle {
+            color: white;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .header .nav .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav .nav-icons a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav .nav-icons a i {
+            margin-right: 5px;
+        }
+
+        .header .nav .nav-icons a:hover {
+            color: #ffcc00;
+        }
+
+        .banner {
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        .btn-add-to-cart {
+            background-color: #0c5dfe;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #0843c6;
+        }
+
+        .cart {
+            margin-top: 20px;
+        }
+
+        .cart .product {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart .product img {
+            width: 60px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .cart .product-info {
+            flex: 1;
+        }
+
+        .cart .product-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart .product-actions input[type="number"] {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .cart .product-actions button {
+            margin-left: 10px;
+        }
+
+        /* Search Container */
+        .search-container {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+            z-index: 5;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            border-radius: 5px 5px 0 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .search-results a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .search-results a:last-child {
+            border-bottom: none;
+        }
+
+        .search-results a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .search-results p {
+            padding: 10px;
+            color: #888;
+            text-align: center;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo" id="logoWrapper">
+                <a href=home.php">
+                    <img src="Image/p2.png" alt="Petzzyy">
+                    <b>
+                        <h1>Petzzyy</h1>
+                    </b>
+                </a>
+            </div>
+            <nav class="nav">
+                <div class="nav-icons">
+                    <a href="#" id="searchToggle"><i class="fas fa-search"></i> Search</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <a href=profile.php"><i class="fas fa-user"></i> Profile</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Search Container -->
+    <div id="searchContainer" class="search-container">
+        <input type="text" id="searchInput" placeholder="Search..." />
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="container mx-auto p-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p32.jpeg" alt="Royal Canin Veterinary Diet Satiety Weight Management Adult Dry Dog Food 15 KG"
+                    class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Freshpet Healthy & Natural Food for Small Dogs/Breeds, Grain Free
+                    Chicken Recipe, 1lb</h2>
+                <p class="text-gray-800 mb-4">₹1250.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="1"
+                    data-name="Freshpet Healthy & Natural Food for Small Dogs/Breeds, Grain Free Chicken Recipe, 1lb"
+                    data-price="1250" data-image="p32.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p33.png" alt="Royal Canin Veterinary Diet Wet Renal Dog Food 410 gm" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">FULL MOON® All Natural Human Grade Dog Treats, Chicken Strips, 12
+                    Ounce, Dry, Soft Treats</h2>
+                <p class="text-gray-800 mb-4">₹420.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="2"
+                    data-name="FULL MOON® All Natural Human Grade Dog Treats, Chicken Strips, 12 Ounce, Dry, Soft Treats"
+                    data-price="420" data-image="p33.png">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p34.jpeg" alt="Acana Adult (Cobb Chicken & Greens) Dog Food 340 Gm" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Wellness CORE+ Natural Grain Free Dry Dog Food, Wild Game Recipe with
+                    Freeze Dried Lamb, 18lb Bag</h2>
+                <p class="text-gray-800 mb-4">₹549.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="3"
+                    data-name="Wellness CORE+ Natural Grain Free Dry Dog Food, Wild Game Recipe with Freeze Dried Lamb, 18lb Bag"
+                    data-price="549" data-image="p34.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p35.jpeg" alt="DROOLS Vet Pro Dog Adult 12 kg" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Wellness CORE Digestive Health Dry Dog Food, Small Breed Chicken &
+                    Brown Rice Dry Dog Food, 4 Pound Bag</h2>
+                <p class="text-gray-800 mb-4">₹3000.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="4"
+                    data-name="Wellness CORE Digestive Health Dry Dog Food, Small Breed Chicken & Brown Rice Dry Dog Food, 4 Pound Bag"
+                    data-price="3000" data-image="p35.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p36.jpeg" alt="Farmina Vet Life Canine Formula Joint 2 Kg" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Wellness CORE RawRev Grain Free Ocean Whitefish, Herring Meal & Salmon
+                    Meal Recipe, 4 Pound Bag</h2>
+                <p class="text-gray-800 mb-4">₹2420.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="5"
+                    data-name="Wellness CORE RawRev Grain Free Ocean Whitefish, Herring Meal & Salmon Meal Recipe, 4 Pound Bag"
+                    data-price="2420" data-image="p36.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p37.jpeg" alt="Farmina Vet Life Hepatic Wet Dog Food 300g" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Wellness Bowl Boosters Functional Freeze-Dried Dog Food Topper, 4
+                    Ounce Bag</h2>
+                <p class="text-gray-800 mb-4">₹459.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="6"
+                    data-name="Wellness Bowl Boosters Functional Freeze-Dried Dog Food Topper, 4 Ounce Bag"
+                    data-price="459" data-image="p37.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p38.jpeg" alt="Farmina Vet Life Canine Formula Oxalate 2 Kg" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Wellness CORE Bowl Boosters, Functional Meal for Immunity, 4 Ounce
+                    Bag</h2>
+                <p class="text-gray-800 mb-4">₹2500.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="7"
+                    data-name="Wellness CORE Bowl Boosters, Functional Meal for Immunity, 4 Ounce Bag"
+                    data-price="2500" data-image="p38.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p39.jpeg" alt="Farmina Vet Life Struvite Canine Formula 2 kg" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Pure Balance Chicken & Brown Rice Recipe Dry Dog Food, 15 lbs</h2>
+                <p class="text-gray-800 mb-4">₹2300.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="8"
+                    data-name="Pure Balance Chicken & Brown Rice Recipe Dry Dog Food, 15 lbs"
+                    data-price="2300" data-image="p39.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p40.jpeg" alt="Farmina Vet Life Canine Formula Diabetic 2 Kg" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">IAMS PROACTIVE HEALTH Small & Toy Breed Adult Dry Dog Food Chicken, 7
+                    lb. Bag</h2>
+                <p class="text-gray-800 mb-4">₹1900.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="9"
+                    data-name="IAMS PROACTIVE HEALTH Small & Toy Breed Adult Dry Dog Food Chicken, 7 lb. Bag"
+                    data-price="1900" data-image="p40.jpeg">Add to Cart</button>
+            </div>
+            <div class="bg-white text-black rounded-lg shadow-md p-4">
+                <img src="Image/p41.jpeg" alt="Farmina Vet Life Canine Formula Obesity 2 Kg" class="w-full h-auto mb-4">
+                <h2 class="text-lg font-bold mb-2">Pure Balance Pro+ Small Breed Chicken & Pea Recipe Dry Dog Food, 8
+                    lbs</h2>
+                <p class="text-gray-800 mb-4">₹2300.00</p>
+                <button class="btn-add-to-cart text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    data-id="10"
+                    data-name="Pure Balance Pro+ Small Breed Chicken & Pea Recipe Dry Dog Food, 8 lbs"
+                    data-price="2300" data-image="p41.jpeg">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    const productCard = event.target.closest('.bg-white');
+                    const productImage = productCard.querySelector('img').src;
+                    const productName = productCard.querySelector('h2').innerText;
+                    const productPrice = productCard.querySelector('p').innerText.replace('₹', '');
+
+                    const product = {
+                        id: event.target.dataset.id,
+                        image: productImage,
+                        name: productName,
+                        price: parseFloat(productPrice),
+                        quantity: 1
+                    };
+
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+
+                    if (existingProductIndex !== -1) {
+                        cart[existingProductIndex].quantity += 1;
+                    } else {
+                        cart.push(product);
+                    }
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert(`${productName} has been added to your cart.`);
+                });
+            });
+
+            const searchToggle = document.getElementById('searchToggle');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+
+            searchToggle.addEventListener('click', () => {
+                searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+                searchInput.focus();
+            });
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                const products = document.querySelectorAll('.bg-white');
+
+                searchResults.innerHTML = '';
+
+                let hasResults = false;
+
+                products.forEach(product => {
+                    const name = product.querySelector('h2').innerText.toLowerCase();
+                    const price = product.querySelector('p').innerText.toLowerCase();
+
+                    if (name.includes(query) || price.includes(query)) {
+                        const result = document.createElement('a');
+                        result.href = '#';
+                        result.textContent = name;
+                        result.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            product.scrollIntoView({ behavior: 'smooth' });
+                            searchContainer.style.display = 'none';
+                        });
+                        searchResults.appendChild(result);
+                        hasResults = true;
+                    }
+                });
+
+                if (!hasResults) {
+                    const noResult = document.createElement('p');
+                    noResult.textContent = 'No products found';
+                    searchResults.appendChild(noResult);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

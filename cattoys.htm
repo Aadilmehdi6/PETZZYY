@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petzzyy - Cat Toys</title>
+    <link rel="stylesheet" href="cattoys.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Image/p2.png" alt="Petzzyy Logo">
+            <span>Petzzyy</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.php">Home</a></li>
+                <li><a href="food.html">Pet Food</a></li>
+                <li><a href="toys.html">Pet Toys</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Shop for Cat Toys</h1>
+        <div class="product-grid">
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/s8VmhPrXtpaNCspT6tPUCLFJ-8MeuqOzEFzd4Uz3W0g.jpg" alt="Feather Wand">
+                <h2>Feather Wand</h2>
+                <p>₹300.00</p>
+                <button class="add-to-cart" data-name="Feather Wand" data-price="300" data-image="https://storage.googleapis.com/a1aa/image/cat-toy-1.jpg">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/2yJWrjoycdKy5T-K6BO3cbQ-f0JBrP99lsGDXj9HWr8.jpg" alt="Catnip Ball">
+                <h2>Catnip Ball</h2>
+                <p>₹250.00</p>
+                <button class="add-to-cart" data-name="Catnip Ball" data-price="250" data-image="https://storage.googleapis.com/a1aa/image/cat-toy-2.jpg">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/HedlfIpuRSrYkjXrjEmIjVMc7QszJgfiG2vczpHfdd8.jpg" alt="Interactive Mouse Toy">
+                <h2>Interactive Mouse Toy</h2>
+                <p>₹400.00</p>
+                <button class="add-to-cart" data-name="Interactive Mouse Toy" data-price="400" data-image="https://storage.googleapis.com/a1aa/image/cat-toy-3.jpg">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/UYwfkb3O-eSqVDzvip-xu4JWSBLvUdibfa6_rTXPBjE.jpg" alt="Rolling Ball">
+                <h2>Rolling Ball</h2>
+                <p>₹350.00</p>
+                <button class="add-to-cart" data-name="Rolling Ball" data-price="350" data-image="Image/cat-toy-4.png">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Petzzyy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to update cart count based on total quantity
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById("cart-count").textContent = totalItems;
+        }
+
+        // Function to add items to cart
+        function addToCart(event) {
+            let button = event.target;
+            let name = button.getAttribute("data-name");
+            let price = parseFloat(button.getAttribute("data-price")); // Convert price to number
+            let image = button.getAttribute("data-image");
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // Check if item already exists in cart
+            let existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1; // Increase quantity if item exists
+            } else {
+                cart.push({ name, price, image, quantity: 1 }); // Add new item with quantity
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCartCount();
+            alert(name + " added to cart!");
+        }
+
+        // Attach event listeners to "Add to Cart" buttons
+        function attachAddToCartListeners() {
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.removeEventListener("click", addToCart); // Prevent duplicate listeners
+                button.addEventListener("click", addToCart);
+            });
+        }
+
+        // Load cart count when page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartCount();
+            attachAddToCartListeners();
+        });
+    </script>
+</body>
+</html>

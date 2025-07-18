@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .header {
+            background-color: #0c5dfe;
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .header .logo img {
+            height: 40px;
+            margin-right: 5px;
+        }
+
+        .header .logo h1 {
+            font-size: 16px;
+            margin: 0;
+            color: rgb(17, 2, 2);
+        }
+
+        .header .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav #menuToggle {
+            color: white;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .header .nav .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav .nav-icons a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .header .nav .nav-icons a i {
+            margin-right: 5px;
+        }
+
+        .header .nav .nav-icons a:hover {
+            color: #ffcc00;
+        }
+
+        .cart {
+            margin-top: 20px;
+        }
+
+        .cart .product {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart .product img {
+            width: 60px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .cart .product-info {
+            flex: 1;
+        }
+
+        .cart .product-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart .product-actions input[type="number"] {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .cart .product-actions button {
+            margin-left: 10px;
+        }
+
+        .btn-remove {
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            background-color: darkred;
+        }
+
+        #searchContainer {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #searchResults a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        #searchResults a:hover {
+            background: #f0f0f0;
+        }
+
+        #searchResults p {
+            padding: 10px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo" id="logoWrapper">
+                <a href="home.php">
+                    <img src="Image/p2.png" alt="Petzzyy">
+                    <b>
+                        <h1>Petzzyy</h1>
+                    </b>
+                </a>
+            </div>
+            <nav class="nav">
+                <div class="nav-icons">
+                    <a href="#" id="searchToggle"><i class="fas fa-search"></i> Search</a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="searchContainer" class="p-4">
+        <input type="text" id="searchInput" placeholder="Search products..." class="p-2 w-full border border-gray-300">
+        <div id="searchResults" class="mt-2"></div>
+    </div>
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">My Cart</h1>
+        <div id="cartItems" class="cart"></div>
+        <p class="text-lg font-bold">Total: ₹<span id="cartTotal">0</span></p>
+        <!-- Checkout Button -->
+<button id="checkoutButton" class="bg-blue-500 text-white px-4 py-2 mt-4 hover:bg-blue-700">Proceed to Checkout</button>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+    
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+            function renderCart() {
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+    
+                cart.forEach((item, index) => {
+                    total += parseFloat(item.price) * item.quantity;  // Ensure price is properly calculated
+    
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('product', 'bg-white', 'rounded-lg', 'shadow-md', 'p-4', 'mb-4');
+    
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-auto mb-4">
+                        <div class="product-info">
+                            <h2 class="text-lg font-bold mb-2">${item.name}</h2>
+                            <p class="text-gray-800 mb-2">₹${item.price}</p>
+                        </div>
+                        <div class="product-actions">
+                            <input type="number" value="${item.quantity}" min="1" data-index="${index}" class="quantity-input">
+                            <button class="btn-remove" data-index="${index}">Remove</button>
+                        </div>
+                    `;
+    
+                    cartItemsContainer.appendChild(cartItem);
+                });
+    
+                cartTotalElement.textContent = total.toFixed(2);
+    
+                // Add Checkout Button if not already present
+                let checkoutButton = document.getElementById('checkoutButton');
+                if (!checkoutButton) {
+                    checkoutButton = document.createElement('button');
+                    checkoutButton.id = 'checkoutButton';
+                    checkoutButton.className = 'bg-blue-500 text-white px-4 py-2 mt-4 hover:bg-blue-700';
+                    checkoutButton.textContent = 'Proceed to Checkout';
+                    cartItemsContainer.parentElement.appendChild(checkoutButton);
+                }
+    
+                // Event Listener for Checkout Button
+                checkoutButton.addEventListener('click', function () {
+                    if (cart.length === 0) {
+                        alert("Your cart is empty!");
+                    } else {
+                        window.location.href = 'checkout.html';  // Redirect to checkout page
+                    }
+                });
+    
+                // Update Quantity Inputs
+                document.querySelectorAll('.quantity-input').forEach(input => {
+                    input.addEventListener('change', function (event) {
+                        const productIndex = event.target.dataset.index;
+                        const newQuantity = parseInt(event.target.value);
+    
+                        if (newQuantity > 0) {
+                            cart[productIndex].quantity = newQuantity;
+                        } else {
+                            cart.splice(productIndex, 1);
+                        }
+    
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                    });
+                });
+    
+                // Remove Item from Cart
+                document.querySelectorAll('.btn-remove').forEach(button => {
+                    button.addEventListener('click', function (event) {
+                        const productIndex = event.target.dataset.index;
+                        cart.splice(productIndex, 1);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                    });
+                });
+            }
+    
+            renderCart();
+    
+            // SEARCH FUNCTIONALITY
+            const searchToggle = document.getElementById('searchToggle');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+    
+            searchToggle.addEventListener('click', () => {
+                searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+                searchInput.focus();
+            });
+    
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                const products = document.querySelectorAll('.product');
+    
+                searchResults.innerHTML = '';
+    
+                let hasResults = false;
+    
+                products.forEach(product => {
+                    const name = product.querySelector('h2').innerText.toLowerCase();
+                    const price = product.querySelector('p').innerText.toLowerCase();
+    
+                    if (name.includes(query) || price.includes(query)) {
+                        const result = document.createElement('a');
+                        result.href = '#';
+                        result.textContent = name;
+                        result.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            product.scrollIntoView({ behavior: 'smooth' });
+                            searchContainer.style.display = 'none';
+                        });
+                        searchResults.appendChild(result);
+                        hasResults = true;
+                    }
+                });
+    
+                if (!hasResults) {
+                    const noResult = document.createElement('p');
+                    noResult.textContent = 'No products found';
+                    searchResults.appendChild(noResult);
+                }
+            });
+        });
+    </script>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petzzyy - Cat Grooming</title>
+    <link rel="stylesheet" href="catgrooming.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Image/p2.png" alt="Petzzyy Logo">
+            <span>Petzzyy</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.php">Home</a></li>
+                <li><a href="food.html">Pet Food</a></li>
+                <li><a href="toys.html">Pet Toys</a></li>
+                <li><a href="catgrooming.html" class="active">Cat Grooming</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Shop for Cat Grooming Products</h1>
+        <div class="product-grid">
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/GqjOO5mia-XJyP91Oa_ZSI1dse_2dh0ttUJK7b8DiA0.jpg" alt="Cat Brush">
+                <h2>Cat Brush</h2>
+                <p>₹350.00</p>
+                <button class="add-to-cart" data-name="Cat Brush" data-price="350" data-image="https://storage.googleapis.com/a1aa/image/cat-brush.jpg">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/HLuCHOuFCDpSjhlJBELOC0_EGOX8vPPCYs38JP5pnyU.jpg" alt="Cat Shampoo">
+                <h2>Cat Shampoo</h2>
+                <p>₹500.00</p>
+                <button class="add-to-cart" data-name="Cat Shampoo" data-price="500" data-image="https://storage.googleapis.com/a1aa/image/cat-shampoo.jpg">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/3qMVCUNiY0Th7F2isN15qlAOQD-dH1Cw0j8JvfG6tQk.jpg" alt="Cat Nail Clipper">
+                <h2>Cat Nail Clipper</h2>
+                <p>₹400.00</p>
+                <button class="add-to-cart" data-name="Cat Nail Clipper" data-price="400" data-image="https://storage.googleapis.com/a1aa/image/cat-nail-clipper.jpg">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="https://storage.googleapis.com/a1aa/image/GEe8eFvHw0ktAn0k0mxqs6HKuC63SwPzBcHcy8RAqGU.jpg" alt="Cat Grooming Kit">
+                <h2>Cat Grooming Kit</h2>
+                <p>₹900.00</p>
+                <button class="add-to-cart" data-name="Cat Grooming Kit" data-price="900" data-image="Image/cat-grooming-kit.png">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Petzzyy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to update cart count based on total quantity
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById("cart-count").textContent = totalItems;
+        }
+
+        // Function to add items to cart
+        function addToCart(event) {
+            let button = event.target;
+            let name = button.getAttribute("data-name");
+            let price = parseFloat(button.getAttribute("data-price")); // Convert price to number
+            let image = button.getAttribute("data-image");
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // Check if item already exists in cart
+            let existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1; // Increase quantity if item exists
+            } else {
+                cart.push({ name, price, image, quantity: 1 }); // Add new item with quantity
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            updateCartCount();
+            alert(name + " added to cart!");
+        }
+
+        // Attach event listeners to "Add to Cart" buttons
+        function attachAddToCartListeners() {
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.removeEventListener("click", addToCart); // Prevent duplicate listeners
+                button.addEventListener("click", addToCart);
+            });
+        }
+
+        // Load cart count when page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartCount();
+            attachAddToCartListeners();
+        });
+    </script>
+</body>
+</html>
